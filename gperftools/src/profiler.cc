@@ -43,6 +43,7 @@
 #include <string.h>
 #include <cilk/cilk.h>
 #include <cilk/cilk_api.h>
+#include <vector>
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>  // for getpid()
 #endif
@@ -346,12 +347,17 @@ void print_pedigree(__cilkrts_pedigree* ped) {
 
 
 
+
+
 // Signal handler that records the pc in the profile-data structure. We do no
 // synchronization here.  profile-handler.cc guarantees that at most one
 // instance of prof_handler() will run at a time. All other routines that
 // access the data touched by prof_handler() disable this signal handler before
 // accessing the data and therefore cannot execute concurrently with
 // prof_handler().
+
+std::vector<int> global_vector;
+
 void CpuProfiler::prof_handler(int sig, siginfo_t*, void* signal_ucontext,
                                void* cpu_profiler) {
   CpuProfiler* instance = static_cast<CpuProfiler*>(cpu_profiler);
@@ -387,6 +393,7 @@ void CpuProfiler::prof_handler(int sig, siginfo_t*, void* signal_ucontext,
 
 
     printf("TFK: Hello there! %d\n", __cilkrts_get_worker_number());
+    global_vector.push_back(__cilkrts_get_worker_number());
     //printf("TFK: Here's a pointer to a pedigree %p\n", __cilkrts_get_pedigree());
     __cilkrts_pedigree ped = __cilkrts_get_pedigree();
     print_pedigree(&ped);
@@ -419,6 +426,13 @@ extern "C" PERFTOOLS_DLL_DECL int ProfilerStartWithOptions(
 }
 
 extern "C" PERFTOOLS_DLL_DECL void ProfilerStop() {
+  printf("Stopping the profiler, printing out cilk data\n");
+  FILE* pfile = fopen("profile_data_cilk.data", "w");
+
+  for (int i = 0; i < global_vector.size(); i++) {
+     fprintf(pfile, "sample worker number is %d\n", global_vector[i]);
+  }
+  fclose(pfile);
   CpuProfiler::instance_.Stop();
 }
 
