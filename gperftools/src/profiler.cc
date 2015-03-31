@@ -64,6 +64,8 @@ typedef int ucontext_t;   // just to quiet the compiler, mostly
 #include "base/logging.h"
 #include "base/googleinit.h"
 #include "base/spinlock.h"
+#include <cilk/cilk.h>
+#include <cilk/cilk_api.h>
 #include "base/sysinfo.h"             /* for GetUniquePathFromEnv, etc */
 #include "profiledata.h"
 #include "profile-handler.h"
