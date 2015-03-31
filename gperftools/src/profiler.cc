@@ -62,6 +62,8 @@ typedef int ucontext_t;   // just to quiet the compiler, mostly
 #include "base/logging.h"
 #include "base/googleinit.h"
 #include "base/spinlock.h"
+#include <cilk/cilk.h>
+#include <cilk/cilk_api.h>
 #include "base/sysinfo.h"             /* for GetUniquePathFromEnv, etc */
 #include "profiledata.h"
 #include "profile-handler.h"
@@ -370,7 +372,7 @@ void CpuProfiler::prof_handler(int sig, siginfo_t*, void* signal_ucontext,
     }
 
 
-    printf("TFK: Hello there!\n");
+    printf("TFK: Hello there! %d\n", __cilkrts_get_worker_number());
     instance->collector_.Add(depth, used_stack);
   }
 }
