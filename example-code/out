@@ -1,0 +1,157 @@
+# Samples: 4918
+#
+# Overhead      Command                                                                         Shared Object  Symbol
+# ........  ...........  ....................................................................................  ......
+#
+    49.37%         main  ./main                                                                                [.] cilk_loop_line_346_2
+    40.18%         main  ./main                                                                                [.] cilk_loop_line_346_1
+     1.04%         main  ./main                                                                                [.] _Z11comp_filterm.part.1
+     0.92%         main  /scratch/intel/composer_xe_2013.3.163/compiler/lib/intel64/libcilkrts.so.5.0.3613     [.] worker_scheduler_function
+     0.69%         main  [kernel]                                                                              [k] schedule
+     0.35%         main  [kernel]                                                                              [k] system_call
+     0.33%         main  [kernel]                                                                              [k] thread_return
+     0.28%         main  /scratch/intel/composer_xe_2013.3.163/compiler/lib/intel64/libcilkrts.so.5.0.3613     [.] __cilkrts_short_pause
+     0.26%         main  [kernel]                                                                              [k] sysret_check
+     0.26%         main  [kernel]                                                                              [k] _spin_lock
+     0.24%         main  [kernel]                                                                              [k] system_call_after_swapgs
+     0.24%         main  [kernel]                                                                              [k] update_curr
+     0.24%         main  /lib/libc-2.11.3.so                                                                   [.] __GI_sched_yield
+     0.22%         main  [kernel]                                                                              [k] set_next_entity
+     0.22%         main  [kernel]                                                                              [k] put_prev_task_fair
+     0.22%         main  [kernel]                                                                              [k] _spin_lock_irq
+     0.20%         main  [kernel]                                                                              [k] sched_clock_cpu
+     0.18%         main  [kernel]                                                                              [k] task_of
+     0.18%         main  [kernel]                                                                              [k] pick_next_task_fair
+     0.18%         main  [kernel]                                                                              [k] sys_sched_yield
+     0.16%         main  [kernel]                                                                              [k] native_read_tsc
+     0.14%         main  /scratch/intel/composer_xe_2013.3.163/compiler/lib/intel64/libcilkrts.so.5.0.3613     [.] cilk_fiber::allocate(cilk_fiber_pool*)
+     0.12%         main  /lib/ld-2.11.3.so                                                                     [.] do_lookup_x
+     0.10%         main  [kernel]                                                                              [k] __cycles_2_ns
+     0.10%         main  [kernel]                                                                              [k] rb_erase
+     0.10%         main  /scratch/intel/composer_xe_2013.3.163/compiler/lib/intel64/libcilkrts.so.5.0.3613     [.] __cilkrts_short_pause@plt
+     0.10%         main  /scratch/intel/composer_xe_2013.3.163/compiler/lib/intel64/libcilkrts.so.5.0.3613     [.] cilk_fiber::deallocate_self(cilk_fiber_pool*)
+     0.10%         main  /lib/ld-2.11.3.so                                                                     [.] _dl_lookup_symbol_x
+     0.08%         main  [kernel]                                                                              [k] hrtick_start_fair
+     0.06%         main  [kernel]                                                                              [k] system_call_fastpath
+     0.06%         main  [kernel]                                                                              [k] update_rq_clock
+     0.06%         main  [kernel]                                                                              [k] unmap_vmas
+     0.06%         main  [kernel]                                                                              [k] find_next_bit
+     0.06%         main  [kernel]                                                                              [k] rb_insert_color
+     0.06%         main  [kernel]                                                                              [k] clear_page_c
+     0.06%         main  [kernel]                                                                              [k] page_fault
+     0.06%         main  /scratch/intel/composer_xe_2013.3.163/compiler/lib/intel64/libcilkrts.so.5.0.3613     [.] worker_runnable
+     0.06%         main  /scratch/intel/composer_xe_2013.3.163/compiler/lib/intel64/libcilkrts.so.5.0.3613     [.] __cilkrts_mutex_lock
+     0.06%         main  /lib/ld-2.11.3.so                                                                     [.] check_match.12149
+     0.06%         main  /lib/ld-2.11.3.so                                                                     [.] _dl_relocate_object
+     0.04%         main  [kernel]                                                                              [k] invalidate_interrupt3
+     0.04%         main  [kernel]                                                                              [k] calc_delta_fair
+     0.04%         main  [kernel]                                                                              [k] pick_next_task
+     0.04%         main  [kernel]                                                                              [k] post_schedule
+     0.04%         main  [kernel]                                                                              [k] __alloc_pages_nodemask
+     0.04%         main  [kernel]                                                                              [k] mmap_region
+     0.04%         main  [kernel]                                                                              [k] __link_path_walk
+     0.04%         main  [kernel]                                                                              [k] cpumask_next_and
+     0.04%         main  [kernel]                                                                              [k] rb_next
+     0.04%         main  [kernel]                                                                              [k] __rwsem_do_wake
+     0.04%         main  /scratch/intel/composer_xe_2013.3.163/compiler/lib/intel64/libcilkrts.so.5.0.3613     [.] void cilk_for_recursive<unsigned long, void (*)(void*, unsigned long, unsigned long)>(unsigned long, unsigned long, void (*)(void*, unsigned long, unsigned long), void*, int, __cilkrts_worker*, __cilkrts_pedigree*)
+     0.04%         main  /scratch/intel/composer_xe_2013.3.163/compiler/lib/intel64/libcilkrts.so.5.0.3613     [.] __cilkrts_xchg
+     0.04%         main  /scratch/intel/composer_xe_2013.3.163/compiler/lib/intel64/libcilkrts.so.5.0.3613     [.] longjmp_into_runtime
+     0.04%         main  /lib/ld-2.11.3.so                                                                     [.] strcmp
+     0.02%  perf_2.6.32  [kernel]                                                                              [k] current_fs_time
+     0.02%  perf_2.6.32  [kernel]                                                                              [k] get_signal_to_deliver
+     0.02%  perf_2.6.32  [kernel]                                                                              [k] get_page_from_freelist
+     0.02%  perf_2.6.32  [kernel]                                                                              [k] mark_page_accessed
+     0.02%  perf_2.6.32  [kernel]                                                                              [k] proc_pident_lookup
+     0.02%  perf_2.6.32  [kernel]                                                                              [k] key_put
+     0.02%  perf_2.6.32  [kernel]                                                                              [k] format_decode
+     0.02%  perf_2.6.32  /usr/bin/perf_2.6.32                                                                  [.] fgets@plt
+     0.02%  perf_2.6.32  /lib/ld-2.11.3.so                                                                     [.] do_lookup_x
+     0.02%         main  [kernel]                                                                              [k] save_args
+     0.02%         main  [kernel]                                                                              [k] call_softirq
+     0.02%         main  [kernel]                                                                              [k] native_sched_clock
+     0.02%         main  [kernel]                                                                              [k] sched_clock
+     0.02%         main  [kernel]                                                                              [k] native_write_cr0
+     0.02%         main  [kernel]                                                                              [k] native_set_pte_at
+     0.02%         main  [kernel]                                                                              [k] native_flush_tlb
+     0.02%         main  [kernel]                                                                              [k] native_flush_tlb_others
+     0.02%         main  [kernel]                                                                              [k] smp_invalidate_interrupt
+     0.02%         main  [kernel]                                                                              [k] pick_next_task_rt
+     0.02%         main  [kernel]                                                                              [k] find_busiest_group
+     0.02%         main  [kernel]                                                                              [k] sys_sched_getaffinity
+     0.02%         main  [kernel]                                                                              [k] finish_task_switch
+     0.02%         main  [kernel]                                                                              [k] up_read
+     0.02%         main  [kernel]                                                                              [k] ktime_get
+     0.02%         main  [kernel]                                                                              [k] do_futex
+     0.02%         main  [kernel]                                                                              [k] check_for_new_grace_period
+     0.02%         main  [kernel]                                                                              [k] perf_output_unlock
+     0.02%         main  [kernel]                                                                              [k] perf_output_begin
+     0.02%         main  [kernel]                                                                              [k] file_read_actor
+     0.02%         main  [kernel]                                                                              [k] find_get_page
+     0.02%         main  [kernel]                                                                              [k] lock_page
+     0.02%         main  [kernel]                                                                              [k] filemap_fault
+     0.02%         main  [kernel]                                                                              [k] __rmqueue
+     0.02%         main  [kernel]                                                                              [k] free_pcppages_bulk
+     0.02%         main  [kernel]                                                                              [k] get_page_from_freelist
+     0.02%         main  [kernel]                                                                              [k] do_wp_page
+     0.02%         main  [kernel]                                                                              [k] find_vma
+     0.02%         main  [kernel]                                                                              [k] mprotect_fixup
+     0.02%         main  [kernel]                                                                              [k] sys_mprotect
+     0.02%         main  [kernel]                                                                              [k] page_add_file_rmap
+     0.02%         main  [kernel]                                                                              [k] get_vma_policy
+     0.02%         main  [kernel]                                                                              [k] alloc_page_vma
+     0.02%         main  [kernel]                                                                              [k] kmem_cache_free
+     0.02%         main  [kernel]                                                                              [k] kmem_cache_alloc_node
+     0.02%         main  [kernel]                                                                              [k] vfs_getattr
+     0.02%         main  [kernel]                                                                              [k] path_init
+     0.02%         main  [kernel]                                                                              [k] alloc_fd
+     0.02%         main  [kernel]                                                                              [k] keyring_search_aux
+     0.02%         main  [kernel]                                                                              [k] prio_tree_replace
+     0.02%         main  [kernel]                                                                              [k] strnlen_user
+     0.02%         main  [kernel]                                                                              [k] strncpy_from_user
+     0.02%         main  [kernel]                                                                              [k] __bitmap_weight
+     0.02%         main  [kernel]                                                                              [k] _cond_resched
+     0.02%         main  [kernel]                                                                              [k] mutex_lock
+     0.02%         main  [kernel]                                                                              [k] _spin_unlock_irqrestore
+     0.02%         main  [kernel]                                                                              [k] do_page_fault
+     0.02%         main  [kernel]                                                                              [k] dma_map_single_attrs	[igb]
+     0.02%         main  [kernel]                                                                              [k] ipt_do_table	[ip_tables]
+     0.02%         main  [kernel]                                                                              [k] PagInCred	[openafs]
+     0.02%         main  [kernel]                                                                              [k] afs_InitReq	[openafs]
+     0.02%         main  [kernel]                                                                              [k] rx_WriteProc32	[openafs]
+     0.02%         main  [kernel]                                                                              [k] afs_cv_wait	[openafs]
+     0.02%         main  [kernel]                                                                              [k] afs_GetDCache	[openafs]
+     0.02%         main  [kernel]                                                                              [k] afs_FindVCache	[openafs]
+     0.02%         main  [kernel]                                                                              [k] afs_access	[openafs]
+     0.02%         main  [kernel]                                                                              [k] afs_lookup	[openafs]
+     0.02%         main  [kernel]                                                                              [k] afs_GetVolumeByName	[openafs]
+     0.02%         main  [kernel]                                                                              [k] afs_fill_inode	[openafs]
+     0.02%         main  /scratch/intel/composer_xe_2013.3.163/compiler/lib/intel64/libcilkrts.so.5.0.3613     [.] signal_node_should_wait@plt
+     0.02%         main  /scratch/intel/composer_xe_2013.3.163/compiler/lib/intel64/libcilkrts.so.5.0.3613     [.] cilk_fiber_remove_reference@plt
+     0.02%         main  /scratch/intel/composer_xe_2013.3.163/compiler/lib/intel64/libcilkrts.so.5.0.3613     [.] pthread_yield@plt
+     0.02%         main  /scratch/intel/composer_xe_2013.3.163/compiler/lib/intel64/libcilkrts.so.5.0.3613     [.] __cilkrts_yield@plt
+     0.02%         main  /scratch/intel/composer_xe_2013.3.163/compiler/lib/intel64/libcilkrts.so.5.0.3613     [.] __cilk_spawn_004
+     0.02%         main  /scratch/intel/composer_xe_2013.3.163/compiler/lib/intel64/libcilkrts.so.5.0.3613     [.] cilk_fiber::remove_reference(cilk_fiber_pool*)
+     0.02%         main  /scratch/intel/composer_xe_2013.3.163/compiler/lib/intel64/libcilkrts.so.5.0.3613     [.] __cilkrts_merge_pending_exceptions
+     0.02%         main  /scratch/intel/composer_xe_2013.3.163/compiler/lib/intel64/libcilkrts.so.5.0.3613     [.] __cilkrts_setup_for_execution_sysdep
+     0.02%         main  /scratch/intel/composer_xe_2013.3.163/compiler/lib/intel64/libcilkrts.so.5.0.3613     [.] validate_full_frame
+     0.02%         main  /scratch/intel/composer_xe_2013.3.163/compiler/lib/intel64/libcilkrts.so.5.0.3613     [.] __cilkrts_os_mutex_lock
+     0.02%         main  /scratch/intel/composer_xe_2013.3.163/compiler/lib/intel64/libcilkrts.so.5.0.3613     [.] __cilkrts_yield
+     0.02%         main  /scratch/intel/composer_xe_2013.3.163/compiler/lib/intel64/libcilkrts.so.5.0.3613     [.] validate_worker
+     0.02%         main  /scratch/intel/composer_xe_2013.3.163/compiler/lib/intel64/libcilkrts.so.5.0.3613     [.] notify_children
+     0.02%         main  /scratch/intel/composer_xe_2013.3.163/compiler/lib/intel64/libcilkrts.so.5.0.3613     [.] __cilkrts_worker_lock
+     0.02%         main  /scratch/intel/composer_xe_2013.3.163/compiler/lib/intel64/libcilkrts.so.5.0.3613     [.] detach_for_steal
+     0.02%         main  /scratch/intel/composer_xe_2013.3.163/compiler/lib/intel64/libcilkrts.so.5.0.3613     [.] signal_node_should_wait
+     0.02%         main  /scratch/intel/composer_xe_2013.3.163/compiler/lib/intel64/libcilkrts.so.5.0.3613     [.] __cilkrts_mutex_trylock
+     0.02%         main  /lib/libpthread-2.11.3.so                                                             [.] __pthread_mutex_lock_internal
+     0.02%         main  /lib/libc-2.11.3.so                                                                   [.] malloc_consolidate
+     0.02%         main  /lib/libc-2.11.3.so                                                                   [.] __memalign
+     0.02%         main  /lib/libc-2.11.3.so                                                                   [.] btowc
+     0.02%         main  /lib/libc-2.11.3.so                                                                   [.] clone
+     0.02%         main  /lib/ld-2.11.3.so                                                                     [.] __strsep
+     0.02%         main  /afs/csail.mit.edu/proj/courses/6.172/cilkplus-4_8-install/lib64/libstdc++.so.6.0.18  [.] __cxa_get_globals@plt
+     0.02%         main  /afs/csail.mit.edu/proj/courses/6.172/cilkplus-4_8-install/lib64/libstdc++.so.6.0.18  [.] std::istream::sentry::sentry(std::istream&, bool)
+     0.02%         main                                                                          7fffad13466e  [.] 0x007fffad13466e
+#
+# (For a higher level overview, try: perf report --sort comm,dso)
+#
+
