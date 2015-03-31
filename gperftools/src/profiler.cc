@@ -41,6 +41,8 @@
 #include <stdio.h>
 #include <errno.h>
 #include <string.h>
+#include <cilk/cilk.h>
+#include <cilk/cilk_api.h>
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>  // for getpid()
 #endif
@@ -330,6 +332,18 @@ void CpuProfiler::DisableHandler() {
   prof_handler_token_ = NULL;
 }
 
+
+void print_pedigree(__cilkrts_pedigree* ped) {
+  while (ped->parent != NULL) {
+    printf(", %d ", ped->rank);
+    ped = (__cilkrts_pedigree*) ped->parent;
+  }
+  printf(", %d\n", ped->rank);
+}
+
+
+
+
 // Signal handler that records the pc in the profile-data structure. We do no
 // synchronization here.  profile-handler.cc guarantees that at most one
 // instance of prof_handler() will run at a time. All other routines that
@@ -370,7 +384,11 @@ void CpuProfiler::prof_handler(int sig, siginfo_t*, void* signal_ucontext,
     }
 
 
-    printf("TFK: Hello there!\n");
+    printf("TFK: Hello there! %d\n", __cilkrts_get_worker_number());
+    //printf("TFK: Here's a pointer to a pedigree %p\n", __cilkrts_get_pedigree());
+    __cilkrts_pedigree ped = __cilkrts_get_pedigree();
+    print_pedigree(&ped);
+
     instance->collector_.Add(depth, used_stack);
   }
 }

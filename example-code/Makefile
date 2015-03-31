@@ -1,8 +1,8 @@
 CC=gcc
 CFLAGS= -g
 CILK=g++
-CILKFLAGS= -g -w -O3 -L/usr/local/lib -lcilkrts -fcilkplus -lprofiler -ldl -Wl,-rpath,/usr/local/lib
-#LDFLAGS= -L$(CURDIR)
+CILKFLAGS= -g -w -O3 -fcilkplus -lcilkrts -lprofiler -Wl,-rpath,/usr/local/lib
+LDFLAGS= -L/usr/local/lib
 #AR=ar
 
 all: main

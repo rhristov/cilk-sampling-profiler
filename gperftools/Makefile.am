@@ -16,7 +16,7 @@ AM_CPPFLAGS += -DNO_TCMALLOC_SAMPLES
 endif !WITH_STACK_TRACE
 
 # This is mostly based on configure options
-AM_CXXFLAGS =
+AM_CXXFLAGS = -fcilkplus
 
 NO_BUILTIN_CXXFLAGS =
 
@@ -51,7 +51,7 @@ endif HAVE_W_NO_UNUSED_RESULT
 
 # The -no-undefined flag allows libtool to generate shared libraries for
 # Cygwin and MinGW.  LIBSTDCXX_LA_LINKER_FLAG is used to fix a Solaris bug.
-AM_LDFLAGS = -no-undefined $(LIBSTDCXX_LA_LINKER_FLAG)
+AM_LDFLAGS = -no-undefined $(LIBSTDCXX_LA_LINKER_FLAG) -lcilkrts
 
 # We know our low-level code cannot trigger an exception.  On some
 # systems, such as cygwin, it would be disastrous if they did, because

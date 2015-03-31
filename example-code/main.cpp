@@ -17,6 +17,8 @@
 #include "sprp64.h"
 #include "sprp32.h"
 #include <cilk/cilk.h>
+#include <cilk/cilk_api.h>
+//#include <cilk/cilk_stub.h>
 #include <cilk/reducer.h>
 #include <cilk/reducer_opadd.h>
 #include <google/profiler.h>
@@ -345,6 +347,47 @@ void find_primes32(uint32_t _start, uint32_t _end) {
   printf("R-M invoke count is %llu\n", invoke_count);
 }
 
+
+
+void print_pedigree(__cilkrts_pedigree* ped) {
+  while (ped->parent != NULL) {
+    printf(", %d ", ped->rank);
+    ped = (__cilkrts_pedigree*) ped->parent;
+  }
+  printf(", %d\n", ped->rank);
+}
+
+void test_function2() {
+
+      __cilkrts_pedigree ped = __cilkrts_get_pedigree();
+      const __cilkrts_pedigree* parent = ped.parent;
+      uint64_t parent_rank = -1;
+      if (parent != NULL) {
+        parent_rank = parent->rank;
+      }
+    printf("Getting the function2 pedigree %llu\n", ped.rank);
+    print_pedigree(&ped);
+}
+
+void test_function3() {
+
+      __cilkrts_pedigree ped = __cilkrts_get_pedigree();
+      const __cilkrts_pedigree* parent = ped.parent;
+      uint64_t parent_rank = -1;
+      if (parent != NULL) {
+        parent_rank = parent->rank;
+      }
+    printf("Getting the function3 pedigree %llu\n", ped.rank);
+    print_pedigree(&ped);
+}
+
+void test_function() {
+  cilk_spawn test_function2();
+  test_function3();
+  cilk_sync;
+}
+
+
 #define PARALLEL
 void find_primes(uint64_t _start, uint64_t _end) {
   /*ZZ start;
@@ -363,9 +406,18 @@ void find_primes(uint64_t _start, uint64_t _end) {
   if (start < bases1_limit) {
     uint64_t limit = bases1_limit;
     if (limit > end) limit = end;
+    #pragma cilk grainsize = 1
     cilk_for (uint64_t i = start; i < limit; i += 2) {
       //if (i%3==0) continue;
       //if (i%5==0) continue;
+      /*__cilkrts_pedigree ped = __cilkrts_get_pedigree();
+      const __cilkrts_pedigree* parent = ped.parent;
+      uint64_t parent_rank = -1;
+      if (parent != NULL) {
+        parent_rank = parent->rank;
+      }
+      printf("Getting the pedigree information %llu\n", parent_rank);*/
+      //test_function();
       const uint64_t p = i;
       if (efficient_mr64(bases1, bases1_cnt, p)) {
         #ifdef PARALLEL
@@ -467,6 +519,7 @@ int main(int argc, char **argv) {
         "include optional 3rd argument to run affinity loop\n");
     return 0;
   }
+  //test_function();
   //sieve = prime_s(N, REPS);
   //printf("done computing sieve\n");
   //char* x = (char*) malloc(sizeof(char) * (1<<40));
