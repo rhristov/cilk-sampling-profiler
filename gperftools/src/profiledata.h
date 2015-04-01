@@ -44,6 +44,7 @@
 #include <config.h>
 #include <time.h>   // for time_t
 #include <stdint.h>
+#include <vector>
 #include "base/basictypes.h"
 
 // A class that accumulates profile samples and writes them to a file.
@@ -130,7 +131,7 @@ class ProfileData {
   //
   // This function is safe to call from asynchronous signals (but is
   // not re-entrant).
-  void Add(int depth, const void* const* stack);
+  void Add(int depth, const void* const* stack, std::vector<uint64_t> pedigree = std::vector<uint64_t>());
 
   // If data collection is enabled, write the data to disk (and leave
   // the collector enabled).
@@ -168,7 +169,7 @@ class ProfileData {
   Slot*         evict_;         // evicted entries
   int           num_evicted_;   // how many evicted entries?
   int           out_;           // fd for output file.
-  int           outped_;        // fd for pedigree output file.
+  FILE* 	outped_;        // fd for pedigree output file.
   int           count_;         // How many samples recorded
   int           evictions_;     // How many evictions
   size_t        total_bytes_;   // How much output

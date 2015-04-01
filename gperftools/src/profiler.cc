@@ -336,13 +336,14 @@ void CpuProfiler::DisableHandler() {
 }
 
 
-std::vector<uint64_t> get_pedigree(__cilkrts_pedigree ped) {
+std::vector<uint64_t> get_pedigree(__cilkrts_pedigree *ped) {
   std::vector<uint64_t> pedigree;
-  while (ped.parent != NULL) {
-    pedigree.push_back(ped.rank);
-    ped = (__cilkrts_pedigree*) ped.parent;
+  while (ped->parent != NULL) {
+    pedigree.push_back(ped->rank);
+    ped = (__cilkrts_pedigree*)ped->parent;
   }
-  pedigree.push_back(ped.rank);
+  pedigree.push_back(ped->rank);
+  return pedigree;
 }
 
 // Signal handler that records the pc in the profile-data structure. We do no
@@ -387,7 +388,7 @@ void CpuProfiler::prof_handler(int sig, siginfo_t*, void* signal_ucontext,
 
     //TFK
     __cilkrts_pedigree ped = __cilkrts_get_pedigree();
-    instance->collector_.Add(depth, used_stack, get_pedigree(ped));
+    instance->collector_.Add(depth, used_stack, get_pedigree(&ped));
   }
 }
 
@@ -415,13 +416,6 @@ extern "C" PERFTOOLS_DLL_DECL int ProfilerStartWithOptions(
 }
 
 extern "C" PERFTOOLS_DLL_DECL void ProfilerStop() {
-  printf("Stopping the profiler, printing out cilk data\n");
-  FILE* pfile = fopen("profile_data_cilk.data", "w");
-
-  for (int i = 0; i < global_vector.size(); i++) {
-     fprintf(pfile, "sample worker number is %d\n", global_vector[i]);
-  }
-  fclose(pfile);
   CpuProfiler::instance_.Stop();
 }
 

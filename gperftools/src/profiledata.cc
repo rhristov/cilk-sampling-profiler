@@ -82,7 +82,6 @@ ProfileData::ProfileData()
       evict_(0),
       num_evicted_(0),
       out_(-1),
-      outped_(-1),
       count_(0),
       evictions_(0),
       total_bytes_(0),
@@ -103,11 +102,10 @@ bool ProfileData::Start(const char* fname,
     return false;
   }
 
-  int fdped = open("cilk_ped.data", O_CREAT | O_WRONLY | O_TRUNC, 0666);
-  if (fdped < 0) {
-    // Can't open outfile for write
-    return false;
-  }
+  char buf[1024] = {0};
+  strcat(buf, "cilk_");
+  strcat(buf, fname);
+  outped_ = fopen(buf, "w");
 
   start_time_ = time(NULL);
   fname_ = strdup(fname);
@@ -132,7 +130,6 @@ bool ProfileData::Start(const char* fname,
   evict_[num_evicted_++] = 0;                     // Padding
 
   out_ = fd;
-  outped_ = fdped;
 
   return true;
 }
@@ -223,7 +220,6 @@ void ProfileData::Reset() {
   start_time_ = 0;
 
   out_ = -1;
-  outped_ = -1;
 }
 
 // This function is safe to call from asynchronous signals (but is not
@@ -267,9 +263,13 @@ void ProfileData::FlushTable() {
   FlushEvicted();
 }
 
-void ProfileData::Add(int depth, const void* const* stack) {
+void ProfileData::Add(int depth, const void* const* stack, std::vector<uint64_t> pedigree) {
   if (!enabled()) {
     return;
+  }
+
+  if (pedigree.size() > 0) {
+    pedigrees_.push_back(pedigree);
   }
 
   if (depth > kMaxStackDepth) depth = kMaxStackDepth;
@@ -332,11 +332,11 @@ void ProfileData::Add(int depth, const void* const* stack) {
 // re-entrant).  However, that's not part of its public interface.
 void ProfileData::FlushEvicted() {
   for (size_t i = 0; i < pedigrees_.size(); i++) {
-      fprintf (outped_, "%u  ", pedigrees_[i].size());
-      for (size_t j = pedigrees[i].size() - 1; j >= 0; j--) {
-          fprintf (outped_, "%llu ", pedgirees_[i][j]);
+      fprintf(outped_, "%lu  ", pedigrees_[i].size());
+      for (int j = (int)pedigrees_[i].size() - 1; j >= 0; j--) {
+          fprintf(outped_, "%lu ", pedigrees_[i][j]);
       }
-      fprintf (outped_, "\n");
+      fprintf(outped_, "\n");
   }
 
 
