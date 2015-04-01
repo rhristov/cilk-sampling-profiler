@@ -162,10 +162,13 @@ class ProfileData {
     Entry entry[kAssociativity];
   };
 
+  std::vector<std::vector<uint64_t> > pedigrees_;
+
   Bucket*       hash_;          // hash table
   Slot*         evict_;         // evicted entries
   int           num_evicted_;   // how many evicted entries?
   int           out_;           // fd for output file.
+  int           outped_;        // fd for pedigree output file.
   int           count_;         // How many samples recorded
   int           evictions_;     // How many evictions
   size_t        total_bytes_;   // How much output

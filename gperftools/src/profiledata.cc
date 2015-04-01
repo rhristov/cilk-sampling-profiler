@@ -82,6 +82,7 @@ ProfileData::ProfileData()
       evict_(0),
       num_evicted_(0),
       out_(-1),
+      outped_(-1),
       count_(0),
       evictions_(0),
       total_bytes_(0),
@@ -98,6 +99,12 @@ bool ProfileData::Start(const char* fname,
   // Open output file and initialize various data structures
   int fd = open(fname, O_CREAT | O_WRONLY | O_TRUNC, 0666);
   if (fd < 0) {
+    // Can't open outfile for write
+    return false;
+  }
+
+  int fdped = open("cilk_ped.data", O_CREAT | O_WRONLY | O_TRUNC, 0666);
+  if (fdped < 0) {
     // Can't open outfile for write
     return false;
   }
@@ -125,6 +132,7 @@ bool ProfileData::Start(const char* fname,
   evict_[num_evicted_++] = 0;                     // Padding
 
   out_ = fd;
+  outped_ = fdped;
 
   return true;
 }
@@ -215,6 +223,7 @@ void ProfileData::Reset() {
   start_time_ = 0;
 
   out_ = -1;
+  outped_ = -1;
 }
 
 // This function is safe to call from asynchronous signals (but is not
@@ -322,6 +331,15 @@ void ProfileData::Add(int depth, const void* const* stack) {
 // This function is safe to call from asynchronous signals (but is not
 // re-entrant).  However, that's not part of its public interface.
 void ProfileData::FlushEvicted() {
+  for (size_t i = 0; i < pedigrees_.size(); i++) {
+      fprintf (outped_, "%u  ", pedigrees_[i].size());
+      for (size_t j = pedigrees[i].size() - 1; j >= 0; j--) {
+          fprintf (outped_, "%llu ", pedgirees_[i][j]);
+      }
+      fprintf (outped_, "\n");
+  }
+
+
   if (num_evicted_ > 0) {
     const char* buf = reinterpret_cast<char*>(evict_);
     size_t bytes = sizeof(evict_[0]) * num_evicted_;

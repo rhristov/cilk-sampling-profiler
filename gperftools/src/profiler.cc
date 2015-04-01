@@ -336,18 +336,14 @@ void CpuProfiler::DisableHandler() {
 }
 
 
-void print_pedigree(__cilkrts_pedigree* ped) {
-  while (ped->parent != NULL) {
-    printf(", %d ", ped->rank);
-    ped = (__cilkrts_pedigree*) ped->parent;
+std::vector<uint64_t> get_pedigree(__cilkrts_pedigree ped) {
+  std::vector<uint64_t> pedigree;
+  while (ped.parent != NULL) {
+    pedigree.push_back(ped.rank);
+    ped = (__cilkrts_pedigree*) ped.parent;
   }
-  printf(", %d\n", ped->rank);
+  pedigree.push_back(ped.rank);
 }
-
-
-
-
-
 
 // Signal handler that records the pc in the profile-data structure. We do no
 // synchronization here.  profile-handler.cc guarantees that at most one
@@ -355,8 +351,6 @@ void print_pedigree(__cilkrts_pedigree* ped) {
 // access the data touched by prof_handler() disable this signal handler before
 // accessing the data and therefore cannot execute concurrently with
 // prof_handler().
-
-std::vector<int> global_vector;
 
 void CpuProfiler::prof_handler(int sig, siginfo_t*, void* signal_ucontext,
                                void* cpu_profiler) {
@@ -391,14 +385,9 @@ void CpuProfiler::prof_handler(int sig, siginfo_t*, void* signal_ucontext,
       depth++;  // To account for pc value in stack[0];
     }
 
-
-    printf("TFK: Hello there! %d\n", __cilkrts_get_worker_number());
-    global_vector.push_back(__cilkrts_get_worker_number());
-    //printf("TFK: Here's a pointer to a pedigree %p\n", __cilkrts_get_pedigree());
+    //TFK
     __cilkrts_pedigree ped = __cilkrts_get_pedigree();
-    print_pedigree(&ped);
-
-    instance->collector_.Add(depth, used_stack);
+    instance->collector_.Add(depth, used_stack, get_pedigree(ped));
   }
 }
 
